@@ -1,0 +1,272 @@
+[
+  {
+    "question": "What is the main topic of this document?",
+    "expected_answer": "The document covers the main subject matter described in its introduction.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What are the key findings or conclusions?",
+    "expected_answer": "The key findings are summarized in the conclusion section.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Who are the main authors or contributors mentioned?",
+    "expected_answer": "The authors are listed in the document header or introduction.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What methodology or approach is described?",
+    "expected_answer": "The methodology section describes the approach used.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What data sources or references are cited?",
+    "expected_answer": "References are listed at the end of the document.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the purpose or objective stated in the document?",
+    "expected_answer": "The objective is stated in the introduction or abstract.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What limitations or challenges are mentioned?",
+    "expected_answer": "Limitations are discussed in the relevant section.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What recommendations are provided?",
+    "expected_answer": "Recommendations are outlined in the conclusions or recommendations section.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What time period does this document cover?",
+    "expected_answer": "The time period is mentioned in the scope or introduction.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What specific metrics or numbers are reported?",
+    "expected_answer": "Metrics and numbers are reported in the results section.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "factual",
+    "difficulty": "hard"
+  },
+  {
+    "question": "How does the document connect its introduction to its conclusions?",
+    "expected_answer": "The document builds from the problem statement through methodology to conclusions.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "multi_hop",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What evidence supports the main argument across different sections?",
+    "expected_answer": "Evidence is distributed across multiple sections supporting the central thesis.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "multi_hop",
+    "difficulty": "hard"
+  },
+  {
+    "question": "How do the methodology and results relate to the stated objectives?",
+    "expected_answer": "The methodology is designed to address the objectives, and results are evaluated against them.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "multi_hop",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the relationship between the challenges identified and the solutions proposed?",
+    "expected_answer": "Each challenge identified has a corresponding solution or recommendation.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "multi_hop",
+    "difficulty": "hard"
+  },
+  {
+    "question": "How do the findings in different sections support the overall conclusion?",
+    "expected_answer": "Findings from each section collectively support the overall conclusion.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "multi_hop",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What is the stock price of this company as of today?",
+    "expected_answer": "I couldn't find this information in the provided documents.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "unanswerable",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What will happen to this organization in the next 10 years?",
+    "expected_answer": "I couldn't find this information in the provided documents.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "unanswerable",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What is the personal email address of the document author?",
+    "expected_answer": "I couldn't find this information in the provided documents.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "unanswerable",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What did competitors say about this document?",
+    "expected_answer": "I couldn't find this information in the provided documents.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "unanswerable",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What is the secret internal budget not mentioned in this document?",
+    "expected_answer": "I couldn't find this information in the provided documents.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "unanswerable",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Can you describe what this document is about?",
+    "expected_answer": "The document covers the main subject matter described in its introduction.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "paraphrased",
+    "difficulty": "easy"
+  },
+  {
+    "question": "Could you summarize the primary conclusions drawn?",
+    "expected_answer": "The key findings are summarized in the conclusion section.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "paraphrased",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Tell me about the goals this document sets out to achieve.",
+    "expected_answer": "The objective is stated in the introduction or abstract.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "paraphrased",
+    "difficulty": "easy"
+  },
+  {
+    "question": "What obstacles or difficulties does the document acknowledge?",
+    "expected_answer": "Limitations are discussed in the relevant section.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "paraphrased",
+    "difficulty": "medium"
+  },
+  {
+    "question": "What suggestions does the document make for moving forward?",
+    "expected_answer": "Recommendations are outlined in the conclusions or recommendations section.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "paraphrased",
+    "difficulty": "medium"
+  },
+  {
+    "question": "Based on the document, what implicit assumptions underlie the methodology?",
+    "expected_answer": "The methodology assumes certain conditions that are either stated or implied.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "reasoning",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What would be the impact if the key assumptions in this document were wrong?",
+    "expected_answer": "If the assumptions were incorrect, the conclusions and recommendations would need revision.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "reasoning",
+    "difficulty": "hard"
+  },
+  {
+    "question": "How does the evidence presented compare to the claims made?",
+    "expected_answer": "The evidence is evaluated against the claims in the results and discussion sections.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "reasoning",
+    "difficulty": "hard"
+  },
+  {
+    "question": "What gaps in knowledge does this document identify or imply?",
+    "expected_answer": "Knowledge gaps are identified in the limitations or future work sections.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "reasoning",
+    "difficulty": "hard"
+  },
+  {
+    "question": "How could the findings in this document be applied in a different context?",
+    "expected_answer": "The findings could be applied in contexts similar to those described in the document.",
+    "relevant_chunk_ids": [],
+    "document_name": null,
+    "page": null,
+    "category": "reasoning",
+    "difficulty": "hard"
+  }
+]

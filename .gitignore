@@ -1,0 +1,29 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Data & DB
+data/
+backend/data/
+*.db
+*.db-shm
+*.db-wal
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Build
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
