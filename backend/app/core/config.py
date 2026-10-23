@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     max_file_size_mb: int
     log_level: str = "INFO"
     openai_api_key: Optional[str] = None
+    tavily_api_key: Optional[str] = None
+    web_search_enabled: bool = True
+    web_search_max_results: int = 5
     max_question_length: int = 2000
     rate_limit_per_minute: int = 30
 

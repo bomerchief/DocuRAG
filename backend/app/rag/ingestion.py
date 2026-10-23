@@ -26,7 +26,11 @@ def parse_document(file_path: str, file_name: str) -> ParsedDocument:
     if ext not in SUPPORTED_EXTENSIONS:
         raise ValueError(f"Unsupported file type: {ext}")
 
-    if not Path(file_path).exists():
+    resolved = Path(file_path).resolve()
+    if not str(resolved).startswith(str(UPLOAD_DIR)):
+        raise ValueError("Invalid file path: outside upload directory")
+
+    if not resolved.exists():
         raise FileNotFoundError(f"File not found: {file_path}")
 
     if ext == ".pdf":
@@ -77,7 +81,10 @@ def _parse_docx(file_path: str) -> ParsedDocument:
 
 
 def _parse_text(file_path: str) -> ParsedDocument:
-    with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+    resolved = Path(file_path).resolve()
+    if not str(resolved).startswith(str(UPLOAD_DIR)):
+        raise ValueError("Invalid file path: outside upload directory")
+    with open(resolved, "r", encoding="utf-8", errors="replace") as f:
         raw = f.read()
     text = clean_text(raw)
     if not text:

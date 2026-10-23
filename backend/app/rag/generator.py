@@ -22,12 +22,14 @@ class LocalLLMProvider(LLMProvider):
         self.timeout = timeout
 
     def generate(self, prompt: str, temperature: float = 0.1) -> str:
+        if len(prompt) > 32000:
+            prompt = prompt[:32000]
         url = f"{self.base_url}/api/generate"
         payload = {
             "model": self.model,
             "prompt": prompt,
             "stream": False,
-            "options": {"temperature": temperature},
+            "options": {"temperature": temperature, "num_predict": 2048},
         }
         try:
             resp = httpx.post(url, json=payload, timeout=self.timeout)
@@ -89,7 +91,7 @@ class GeminiProvider(LLMProvider):
                 raise RuntimeError("LLM_UNAVAILABLE: Gemini API quota exceeded.")
             if "timeout" in err.lower():
                 raise RuntimeError("LLM_TIMEOUT: Gemini API took too long to respond.")
-            raise RuntimeError("LLM_ERROR: Gemini generation failed.")
+            raise RuntimeError(f"LLM_ERROR: {err}")
 
     def is_available(self) -> bool:
         try:
@@ -116,6 +118,8 @@ class OpenAIProvider(LLMProvider):
             model=self.model,
             messages=[{"role": "user", "content": prompt}],
             temperature=temperature,
+            max_tokens=2048,
+            timeout=60.0,
         )
         return resp.choices[0].message.content.strip()
 

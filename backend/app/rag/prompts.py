@@ -33,6 +33,27 @@ Instructions:
 - Do not speculate or add external knowledge.
 
 Answer:""",
+
+    "v3": """You are a knowledgeable assistant with access to both uploaded documents and real-time web information.
+
+DOCUMENT CONTEXT:
+{doc_context}
+
+WEB SEARCH RESULTS:
+{web_context}
+
+QUESTION: {question}
+
+INSTRUCTIONS:
+- Combine information from both document context and web search results to give the best answer.
+- Prefer document context when it directly answers the question.
+- Use web results to supplement, add recency, or fill gaps not covered by documents.
+- Cite document sources as [Document Name, Page X].
+- Cite web sources as [Web: URL].
+- If neither source has relevant information, say so honestly.
+- Be clear, concise, and factual.
+
+ANSWER:""",
 }
 
 
@@ -48,7 +69,20 @@ def build_context_string(chunks: list) -> str:
     return "\n\n---\n\n".join(parts)
 
 
-def format_prompt(question: str, chunks: list, version: str = "v1") -> str:
-    context = build_context_string(chunks)
+def build_web_context_string(web_results: list) -> str:
+    if not web_results:
+        return "No web results available."
+    parts = []
+    for i, r in enumerate(web_results, 1):
+        parts.append(f"[Web {i}: {r.title}]\nURL: {r.url}\n{r.content}")
+    return "\n\n---\n\n".join(parts)
+
+
+def format_prompt(question: str, chunks: list, version: str = "v1", web_results: list = None) -> str:
     template = get_prompt(version)
+    if version == "v3":
+        doc_context = build_context_string(chunks) if chunks else "No document context available."
+        web_context = build_web_context_string(web_results or [])
+        return template.format(doc_context=doc_context, web_context=web_context, question=question)
+    context = build_context_string(chunks)
     return template.format(context=context, question=question)

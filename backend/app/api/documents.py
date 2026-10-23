@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, BackgroundTasks
+from werkzeug.utils import secure_filename
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -143,6 +144,10 @@ async def upload_document(
     if ext not in SUPPORTED_EXTENSIONS:
         raise HTTPException(400, f"Unsupported file type '{ext}'. Supported: {', '.join(SUPPORTED_EXTENSIONS)}")
 
+    safe_name = secure_filename(file.filename)
+    if not safe_name:
+        raise HTTPException(400, "Invalid filename")
+
     content = await file.read()
     size_mb = len(content) / (1024 * 1024)
     if size_mb > settings.max_file_size_mb:
@@ -166,7 +171,7 @@ async def upload_document(
 
     doc = Document(
         id=doc_id,
-        name=file.filename,
+        name=safe_name,
         file_type=ext.lstrip("."),
         file_size_bytes=len(content),
         file_hash=file_hash,
@@ -178,7 +183,7 @@ async def upload_document(
     db.commit()
     db.refresh(doc)
 
-    background_tasks.add_task(_process_document, doc_id, str(save_path), file.filename)
+    background_tasks.add_task(_process_document, doc_id, str(save_path), safe_name)
 
     return _to_response(doc)
 

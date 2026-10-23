@@ -44,10 +44,17 @@ export interface ChatMetrics {
   response_length: number
 }
 
+export interface WebSource {
+  title: string
+  url: string
+  snippet: string
+}
+
 export interface ChatResponse {
   query_id: string
   answer: string
   sources: Source[]
+  web_sources: WebSource[]
   metrics: ChatMetrics
 }
 

@@ -15,7 +15,7 @@ _chroma_client: Optional[chromadb.PersistentClient] = None
 
 
 def get_chroma_client() -> chromadb.PersistentClient:
-    global _chroma_client
+    global _chroma_client  # noqa: PLW0603 — intentional module-level singleton
     if _chroma_client is None:
         _chroma_client = chromadb.PersistentClient(
             path=settings.vector_db_path,

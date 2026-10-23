@@ -4,6 +4,7 @@ from typing import Optional
 from app.rag.retriever import retrieve_chunks, RetrievedChunk
 from app.rag.generator import get_llm_provider
 from app.rag.prompts import format_prompt
+from app.rag.web_search import search_web, WebResult
 from app.utils.timing import timer
 from app.utils.text import truncate_text
 from app.core.config import get_settings
@@ -16,6 +17,7 @@ logger = get_logger(__name__)
 class RAGResult:
     answer: str
     sources: list[RetrievedChunk]
+    web_results: list[WebResult]
     retrieval_latency_ms: float
     generation_latency_ms: float
     total_latency_ms: float
@@ -39,6 +41,12 @@ def run_rag_pipeline(
     prompt_version = prompt_version or settings.prompt_version
     temperature = temperature if temperature is not None else settings.temperature
 
+    # Web search
+    web_results: list[WebResult] = []
+    if settings.web_search_enabled:
+        with timer() as web_time:
+            web_results = search_web(question, max_results=settings.web_search_max_results)
+
     # Retrieval
     with timer() as retrieval_time:
         chunks = retrieve_chunks(
@@ -48,10 +56,12 @@ def run_rag_pipeline(
             similarity_threshold=similarity_threshold,
         )
 
-    if not chunks:
+    # If no docs and no web results, return early
+    if not chunks and not web_results:
         return RAGResult(
-            answer="I couldn't find this information in the provided documents.",
+            answer="I couldn't find relevant information from documents or the web.",
             sources=[],
+            web_results=[],
             retrieval_latency_ms=retrieval_time["elapsed_ms"],
             generation_latency_ms=0.0,
             total_latency_ms=retrieval_time["elapsed_ms"],
@@ -61,8 +71,9 @@ def run_rag_pipeline(
             prompt_version=prompt_version,
         )
 
-    # Build prompt
-    prompt = format_prompt(question, chunks, version=prompt_version)
+    # Use v3 prompt if web search is enabled, else fall back to configured version
+    active_version = "v3" if settings.web_search_enabled else prompt_version
+    prompt = format_prompt(question, chunks, version=active_version, web_results=web_results)
     prompt_size = len(prompt)
 
     # Generation
@@ -77,6 +88,7 @@ def run_rag_pipeline(
         extra={
             "question_preview": truncate_text(question, 80),
             "chunks_retrieved": len(chunks),
+            "web_results": len(web_results),
             "retrieval_latency_ms": round(retrieval_time["elapsed_ms"], 1),
             "generation_latency_ms": round(gen_time["elapsed_ms"], 1),
             "total_latency_ms": round(total_ms, 1),
@@ -86,11 +98,12 @@ def run_rag_pipeline(
     return RAGResult(
         answer=answer,
         sources=chunks,
+        web_results=web_results,
         retrieval_latency_ms=retrieval_time["elapsed_ms"],
         generation_latency_ms=gen_time["elapsed_ms"],
         total_latency_ms=total_ms,
         chunks_retrieved=len(chunks),
         prompt_size=prompt_size,
         response_length=len(answer),
-        prompt_version=prompt_version,
+        prompt_version=active_version,
     )

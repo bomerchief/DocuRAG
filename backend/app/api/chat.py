@@ -64,10 +64,17 @@ class MetricsResponse(BaseModel):
     response_length: int
 
 
+class WebSourceResponse(BaseModel):
+    title: str
+    url: str
+    snippet: str
+
+
 class ChatResponse(BaseModel):
     query_id: str
     answer: str
     sources: list[SourceResponse]
+    web_sources: list[WebSourceResponse]
     metrics: MetricsResponse
 
 
@@ -82,13 +89,10 @@ def chat(request: ChatRequest, db: Session = Depends(get_db)):
             similarity_threshold=request.similarity_threshold,
             prompt_version=request.prompt_version,
         )
-    except RuntimeError as e:
+    except Exception as e:
         error_str = str(e)
         if "LLM_UNAVAILABLE" in error_str:
-            raise HTTPException(503, detail={
-                "error": "LLM_UNAVAILABLE",
-                "message": "The local LLM service is unavailable. Please ensure Ollama is running: `ollama serve`",
-            })
+            raise HTTPException(503, detail={"error": "LLM_UNAVAILABLE", "message": error_str})
         raise HTTPException(500, detail={"error": "LLM_ERROR", "message": error_str})
 
     query_id = generate_id()
@@ -102,6 +106,15 @@ def chat(request: ChatRequest, db: Session = Depends(get_db)):
             section=s.section or None,
         )
         for s in result.sources
+    ]
+
+    web_sources = [
+        WebSourceResponse(
+            title=w.title,
+            url=w.url,
+            snippet=w.content[:300],
+        )
+        for w in result.web_results
     ]
 
     # Persist query log
@@ -130,6 +143,7 @@ def chat(request: ChatRequest, db: Session = Depends(get_db)):
         query_id=query_id,
         answer=result.answer,
         sources=sources,
+        web_sources=web_sources,
         metrics=MetricsResponse(
             retrieval_latency_ms=round(result.retrieval_latency_ms, 1),
             generation_latency_ms=round(result.generation_latency_ms, 1),
